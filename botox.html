@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botulinum Toxin (Botox®)</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Style CSS -->
+    <style>
+        /* Theme Variables */
+        :root {
+            --accent: #ffffff;
+            --accent-soft: #d4d4d8;
+        }
+
+        /* Typography */
+        body {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .serif {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        /* Fade Animation */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity .7s ease, transform .7s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Gold Text */
+        .gold-text {
+            color: white;
+        }
+
+        /* Gold Button */
+        .btn-gold {
+            background: white;
+            color: black;
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(255, 255, 255, .25);
+        }
+
+        /* Accordion */
+        .treatment-item summary {
+            list-style: none;
+            cursor: pointer;
+        }
+
+        .treatment-item summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .plus-icon {
+            transition: transform .3s ease;
+        }
+
+        .treatment-item details[open] .plus-icon {
+            transform: rotate(45deg);
+        }
+
+        /* Decorative Divider */
+        .gold-line {
+            height: 1px;
+            width: 100%;
+            background: linear-gradient(to right,
+                    transparent,
+                    rgba(255, 255, 255, 0.7),
+                    transparent);
+        }
+
+        /* Pulse Animation */
+        @keyframes pulse-dot {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: .6;
+                transform: scale(1.25);
+            }
+        }
+
+        .pulse-dot {
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        /* Optional Cards */
+        .stat-card {
+            border: 1px solid rgba(255, 255, 255, .15);
+            background: rgba(255, 255, 255, .02);
+        }
+
+        .testimonial-card {
+            border: 1px solid rgba(255, 255, 255, .15);
+            background: rgba(255, 255, 255, .02);
+        }
+
+        .sticky-bar {
+            background: rgba(9, 9, 11, .95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        /* Mobile */
+        @media (max-width:768px) {
+            .mobile-hidden {
+                display: none;
+            }
+        }
+    </style>
+
+    <!-- Alpine.js CDN (For simple reactive menu & scroll interactions) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Lucide Icons (Used for Menu, Close, Arrows) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body class="bg-zinc-950 text-zinc-50 antialiased font-sans"
+    x-data="{ menuState:false, isScrolled:false, showSticky:false }"
+    @scroll.window="isScrolled = (window.scrollY > 50); showSticky = (window.scrollY > 300)">
+
+    <!-- HEADER / NAVIGATION -->
+    <header>
+        <nav class="fixed z-20 w-full px-2 transition-all duration-300">
+            <div :class="isScrolled ? 'bg-zinc-900/50 max-w-4xl rounded-2xl border border-zinc-800/50 backdrop-blur-lg lg:px-5' : 'max-w-6xl px-6 lg:px-12'"
+                class="mx-auto mt-2 transition-all duration-300">
+
+                <div class="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
+
+                    <!-- Logo Wrapper -->
+                    <div class="flex w-full justify-between lg:w-auto">
+
+                        <a href="#" class="flex items-center space-x-3">
+                            <div class="px-3 py-1.5">
+                                <span
+                                    class="serif text-sm font-medium tracking-[0.15em] text-zinc-100 uppercase">AREZU<br><span
+                                        class="text-[10px] tracking-[0.3em] font-light">AESTHETICS</span></span>
+                            </div>
+                        </a>
+
+                        <!-- Hamburger Toggle Button (Mobile) -->
+                        <button @click="menuState = !menuState" aria-label="Toggle Menu"
+                            class="relative z-20 -m-2.5 mr-1 block cursor-pointer p-2.5 lg:hidden text-zinc-100">
+                            <i data-lucide="menu" class="w-6 h-6 transition-transform" x-show="!menuState"></i>
+                            <i data-lucide="x" class="w-6 h-6 transition-transform" x-show="menuState" x-cloak></i>
+                        </button>
+                    </div>
+
+                    <!-- Desktop Links (Hidden on Mobile) -->
+                    <div class="absolute inset-0 m-auto hidden size-fit lg:block">
+                        <ul class="flex gap-8 text-sm">
+                            <li><a href="#treatments"
+                                    class="text-zinc-400 hover:text-zinc-100 duration-150">Treatments</a></li>
+                            <li><a href="#overview" class="text-zinc-400 hover:text-zinc-100 duration-150">How It
+                                    Works</a></li>
+
+                            <li><a href="#why-us" class="text-zinc-400 hover:text-zinc-100 duration-150">Why Arezu</a>
+                            </li>
+
+                            <li>
+                                <a href="#doctor" class="text-zinc-400 hover:text-zinc-100 duration-150">
+                                    About Doctor
+                                </a>
+                            </li>
+
+                            <li><a href="#about" class="text-zinc-400 hover:text-zinc-100 duration-150">FAQ</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Mobile Navigation Panel & Desktop Dynamic Right Section -->
+                    <div :class="menuState ? 'block bg-zinc-950 border border-zinc-800 rounded-3xl p-6 shadow-2xl mt-4 space-y-6' : 'hidden lg:block'"
+                        class="w-full lg:flex lg:w-fit lg:items-center lg:gap-6">
+
+                        <!-- Links only visible inside mobile accordion panel -->
+                        <div class="lg:hidden">
+                            <ul class="space-y-4 text-base">
+                                <li><a href="#treatments" @click="menuState = false"
+                                        class="text-zinc-400 hover:text-zinc-100 block duration-150">Treatments</a></li>
+                                <li><a href="#overview" @click="menuState = false"
+                                        class="text-zinc-400 hover:text-zinc-100 block duration-150">How it works</a>
+                                </li>
+                                <li><a href="#why-us" @click="menuState = false"
+                                        class="text-zinc-400 hover:text-zinc-100 block duration-150">Why Arezu</a></li>
+                                <li><a href="#about" @click="menuState = false"
+                                        class="text-zinc-400 hover:text-zinc-100 block duration-150">About Doctor</a>
+                                </li>
+                                <li><a href="#faq" @click="menuState = false"
+                                        class="text-zinc-400 hover:text-zinc-100 block duration-150">FAQ</a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Dynamic Buttons dependent on page layout header position -->
+                        <div class="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
+                            <a href="#" :class="isScrolled ? 'lg:inline-flex' : 'hidden'"
+                                class="inline-flex items-center justify-center text-sm font-medium bg-zinc-100 text-zinc-950 rounded-lg px-4 py-2 hover:bg-zinc-200 transition-colors">Book
+                                Appointment</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- HERO MAIN CONTENT -->
+    <main class="overflow-hidden">
+
+        <!-- Abstract Background Orbs -->
+        <div aria-hidden="true"
+            class="z-[2] absolute inset-0 pointer-events-none isolate opacity-50 contain-strict hidden lg:block">
+            <div
+                class="w-[35rem] h-[80rem] -translate-y-[350px] absolute left-0 top-0 -rotate-45 rounded-full bg-[radial-gradient(68.54%_68.72%_at_55.02%_31.46%,hsla(0,0%,85%,.08)_0,hsla(0,0%,55%,.02)_50%,hsla(0,0%,45%,0)_80%)]">
+            </div>
+            <div
+                class="h-[80rem] absolute left-0 top-0 w-56 -rotate-45 rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.06)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)] [translate:5%_-50%]">
+            </div>
+        </div>
+
+        <section class="relative pt-24 md:pt-36">
+            <!-- Background Visual Grid/Image Overlay -->
+            <div class="absolute inset-0 -z-20">
+                <img src="https://ik.imagekit.io/lrigu76hy/tailark/night-background.jpg?updatedAt=1745733451120"
+                    alt="background mesh"
+                    class="absolute inset-x-0 top-56 opacity-40 mix-blend-lighten lg:top-32 w-full object-cover">
+            </div>
+            <div aria-hidden="true"
+                class="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,#09090b_75%)]">
+            </div>
+
+            <div class="mx-auto max-w-7xl px-6">
+                <div class="text-center sm:mx-auto lg:mr-auto lg:mt-0">
+
+                    <!-- AI Feature Badge Link -->
+                    <a href="#"
+                        class="hover:bg-zinc-900/60 bg-zinc-900/30 border border-zinc-800/80 group mx-auto flex w-fit items-center gap-4 rounded-full p-1 pl-4 shadow-md shadow-black/5 transition-all duration-300">
+                        <span class="text-zinc-300 text-sm">Lisbon's Premium Aesthetic Clinic · Est. 2019</span>
+                        <span class="block h-4 w-0.5 bg-zinc-800"></span>
+                        <div
+                            class="bg-zinc-800 group-hover:bg-zinc-700 size-6 overflow-hidden rounded-full duration-500 relative flex items-center justify-center">
+                            <i data-lucide="arrow-right"
+                                class="w-3 h-3 text-zinc-100 group-hover:translate-x-0.5 transition-transform"></i>
+                        </div>
+                    </a>
+
+                    <!-- Main Headers -->
+                    <h1
+                        class="mt-8 max-w-4xl mx-auto text-balance text-5xl font-bold tracking-tight md:text-7xl lg:mt-16 xl:text-[5.25rem] text-zinc-100">
+                        Botulinum Toxin (Botox®)
+                    </h1>
+                    <p class="mx-auto mt-8 max-w-2xl text-balance text-lg text-zinc-400">
+                        Soften dynamic facial lines and preserve natural facial harmony with expert, tailored
+                        treatments.
+                    </p>
+
+                    <!-- Interactive CTAs -->
+                    <div class="mt-12 flex flex-col items-center justify-center gap-4 md:flex-row">
+                        <div class="bg-zinc-100/10 rounded-[14px] border border-zinc-800 p-0.5 w-full sm:w-auto">
+                            <a href="#"
+                                class="inline-flex w-full sm:w-auto items-center justify-center font-medium bg-zinc-100 text-zinc-950 rounded-xl px-6 py-3 text-base hover:bg-zinc-200 transition-colors">
+                                Book Consultation
+                            </a>
+                        </div>
+                        <a href="#"
+                            class="inline-flex w-full sm:w-auto items-center justify-center font-medium text-zinc-300 hover:text-zinc-100 rounded-xl px-6 py-3 text-base hover:bg-zinc-900/50 transition-all">
+                            Explore Treatments
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Main Content Showcase -->
+            <div class="relative mt-8 px-2 sm:mt-12 md:mt-20">
+                <div
+                    class="bg-zinc-900/40 relative mx-auto max-w-6xl overflow-hidden rounded-2xl border border-zinc-800/80 p-8 md:p-12 shadow-2xl shadow-zinc-950 ring-1 ring-zinc-800/50">
+
+                    <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+                        <!-- Text -->
+                        <div>
+                            <p class="text-xs tracking-[0.3em] text-white uppercase mb-4 font-medium">
+                                The Treatment
+                            </p>
+
+                            <h2 class="serif text-4xl md:text-5xl font-light leading-tight mb-6">
+                                What Is<br>
+                                <em class="text-white">Botulinum Toxin?</em>
+                            </h2>
+
+                            <p class="text-zinc-400 leading-relaxed mb-5">
+                                Botulinum toxin type A is a well-established, non-surgical aesthetic treatment widely
+                                used in anti-aging medicine to reduce dynamic facial wrinkles and help prevent deeper
+                                lines over time.
+                            </p>
+
+                            <p class="text-zinc-400 leading-relaxed mb-5">
+                                By temporarily relaxing targeted facial muscles, it softens expression lines while
+                                preserving natural movement and facial harmony.
+                            </p>
+
+                            <p class="text-zinc-400 leading-relaxed mb-8">
+                                Treatment is tailored to your facial anatomy and aesthetic goals, ensuring
+                                natural-looking results.
+                            </p>
+
+                            <a href="#book"
+                                class="inline-flex items-center rounded-xl bg-[#ffffff] px-6 py-3 text-sm font-semibold text-zinc-950 transition hover:opacity-90">
+                                Book My Consultation →
+                            </a>
+                        </div>
+
+                        <!-- Benefits Card -->
+                        <div class="relative">
+                            <div class="rounded-2xl border border-zinc-800 bg-zinc-900 p-8">
+                                <h3 class="mb-6 text-2xl font-light text-zinc-200">
+                                    Why Patients Choose Botox
+                                </h3>
+
+                                <div class="space-y-6">
+
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium text-zinc-200">
+                                            Non-surgical & minimally invasive
+                                        </p>
+                                        <p class="text-sm text-zinc-500">
+                                            Fine needles, minimal discomfort, no general anesthesia required.
+                                        </p>
+                                    </div>
+
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium text-zinc-200">
+                                            Zero downtime
+                                        </p>
+                                        <p class="text-sm text-zinc-500">
+                                            Return to daily activities immediately. Quick 15–30 minute sessions.
+                                        </p>
+                                    </div>
+
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium text-zinc-200">
+                                            Natural, long-lasting results
+                                        </p>
+                                        <p class="text-sm text-zinc-500">
+                                            Results typically last 3–6 months.
+                                        </p>
+                                    </div>
+
+                                    <div>
+                                        <p class="mb-1 text-sm font-medium text-zinc-200">
+                                            Medical-grade treatment
+                                        </p>
+                                        <p class="text-sm text-zinc-500">
+                                            Performed by experienced medical professionals.
+                                        </p>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div
+                                class="absolute -top-3 -right-3 h-16 w-16 rounded-tr-xl border-r-2 border-t-2 border-[#ffffff]/40">
+                            </div>
+                            <div
+                                class="absolute -bottom-3 -left-3 h-16 w-16 rounded-bl-xl border-b-2 border-l-2 border-[#ffffff]/40">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== TREATMENTS SECTION ===== -->
+        <section class="py-24 bg-zinc-900/30" id="treatments">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="gold-line mb-20"></div>
+                <div class="text-center mb-16 fade-up">
+                    <p class="text-xs tracking-[0.3em] text-white uppercase mb-4 font-medium">Treatment Areas</p>
+                    <h2 class="serif text-4xl md:text-5xl font-light">Everything We Treat</h2>
+                    <p class="text-zinc-500 mt-4 max-w-xl mx-auto font-light">Each treatment is individually planned to
+                        achieve natural results while preserving facial expression and function.</p>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-16 items-start">
+
+                    <!-- Botox zone diagram (SVG-based) -->
+                    <div class="fade-up sticky top-28">
+                        <div class="bg-zinc-900 rounded-2xl p-6 border border-zinc-800/60 text-center">
+                            <p class="text-sm text-zinc-500 mb-4 tracking-wide uppercase text-xs">Treatment Zones</p>
+                            <!-- Simple face diagram with labeled areas -->
+                            <img src="https://arezuaesthetics.com/wp-content/uploads/2025/12/WhatsApp-Image-2025-12-28-at-14.10.31.jpeg"
+                                alt="">
+                        </div>
+                    </div>
+
+                    <!-- Treatment Accordion -->
+                    <div class="space-y-3 fade-up">
+                        <!-- Facial Treatments -->
+                        <div class="mb-2">
+                            <p class="text-xs tracking-[0.25em] text-zinc-500 uppercase mb-3 font-medium">Facial
+                                Aesthetic Treatments</p>
+                        </div>
+
+                        <div id="tx-list" class="space-y-2">
+                            <!-- Each treatment as an accordion item -->
+                            <div class="treatment-item">
+                                <details
+                                    class="bg-zinc-900/60 border border-zinc-800/60 rounded-xl overflow-hidden hover:border-zinc-700/60 transition-colors">
+                                    <summary class="flex items-center justify-between px-5 py-4">
+                                        <span class="text-sm font-medium tracking-wide text-zinc-200 uppercase">Forehead
+                                            Lines</span>
+                                        <i data-lucide="plus" class="plus-icon w-4 h-4 text-white flex-shrink-0"></i>
+                                    </summary>
+                                    <div
+                                        class="px-5 pb-4 text-sm text-zinc-500 font-light leading-relaxed border-t border-zinc-800/40 pt-3">
+                                        Relaxes the frontalis muscle to smooth horizontal forehead lines. Treatment
+                                        preserves natural expression while eliminating deep creases from repeated
+                                        raising of the brows.
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="treatment-item">
+                                <details
+                                    class="bg-zinc-900/60 border border-zinc-800/60 rounded-xl overflow-hidden hover:border-zinc-700/60 transition-colors">
+                                    <summary class="flex items-center justify-between px-5 py-4">
+                                        <span class="text-sm font-medium tracking-wide text-zinc-200 uppercase">Frown
+                                            Lines (Glabellar Lines)</span>
+                                        <i data-lucide="plus" class="plus-icon w-4 h-4 text-white flex-shrink-0"></i>
+                                    </summary>
+                                    <div
+                                        class="px-5 pb-4 text-sm text-zinc-500 font-light leading-relaxed border-t border-zinc-800/40 pt-3">
+                                        Targets the "11 lines" between the eyebrows caused by frowning. One of the most
+                                        requested areas — results in a visibly more relaxed and approachable appearance.
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="treatment-item">
+                                <details
+                                    class="bg-zinc-900/60 border border-zinc-800/60 rounded-xl overflow-hidden hover:border-zinc-700/60 transition-colors">
+                                    <summary class="flex items-center justify-between px-5 py-4">
+                                        <span class="text-sm font-medium tracking-wide text-zinc-200 uppercase">Brow
+                                            Lift (Non-Surgical)</span>
+                                        <i data-lucide="plus" class="plus-icon w-4 h-4 text-white flex-shrink-0"></i>
+                                    </summary>
+                                    <div
+                                        class="px-5 pb-4 text-sm text-zinc-500 font-light leading-relaxed border-t border-zinc-800/40 pt-3">
+                                        Strategic injections subtly elevate the brow arch, creating a lifting effect
+                                        without surgery. Brightens the eye area and restores a youthful arch.
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="treatment-item">
+                                <details
+                                    class="bg-zinc-900/60 border border-zinc-800/60 rounded-xl overflow-hidden hover:border-zinc-700/60 transition-colors">
+                                    <summary class="flex items-center justify-between px-5 py-4">
+                                        <span class="text-sm font-medium tracking-wide text-zinc-200 uppercase">Crow's
+                                            Feet</span>
+                                        <i data-lucide="plus" class="plus-icon w-4 h-4 text-white flex-shrink-0"></i>
+                                    </summary>
+                                    <div
+                                        class="px-5 pb-4 text-sm text-zinc-500 font-light leading-relaxed border-t border-zinc-800/40 pt-3">
+                                        Softens the fine lines radiating from the outer corners of the eyes. Carefully
+                                        dosed to preserve natural smiling expression.
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="treatment-item">
+                                <details
+                                    class="bg-zinc-900/60 border border-zinc-800/60 rounded-xl overflow-hidden hover:border-zinc-700/60 transition-colors">
+                                    <summary class="flex items-center justify-between px-5 py-4">
+                                        <span class="text-sm font-medium tracking-wide text-zinc-200 uppercase">Lip
+                                            Flip</span>
+                                        <i data-lucide="plus" class="plus-icon w-4 h-4 text-white flex-shrink-0"></i>
+                                    </summary>
+                                    <div
+                                        class="px-5 pb-4 text-sm text-zinc-500 font-light leading-relaxed border-t border-zinc-800/40 pt-3">
+                                        Relaxes the orbicularis oris muscle to create a subtle upper lip eversion —
+                                        giving the appearance of a fuller lip without filler.
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="treatment-item">
+                                <details
+                                    class="bg-zinc-900/60 border border-zinc-800/60 rounded-xl overflow-hidden hover:border-zinc-700/60 transition-colors">
+                                    <summary class="flex items-center justify-between px-5 py-4">
+                                        <span class="text-sm font-medium tracking-wide text-zinc-200 uppercase">Gummy
+                                            Smile</span>
+                                        <i data-lucide="plus" class="plus-icon w-4 h-4 text-white flex-shrink-0"></i>
+                                    </summary>
+                                    <div
+                                        class="px-5 pb-4 text-sm text-zinc-500 font-light leading-relaxed border-t border-zinc-800/40 pt-3">
+                                        Reduces excessive gum show when smiling by relaxing the levator labii superioris
+                                        alaeque nasi muscle.
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="treatment-item">
+                                <details
+                                    class="bg-zinc-900/60 border border-zinc-800/60 rounded-xl overflow-hidden hover:border-zinc-700/60 transition-colors">
+                                    <summary class="flex items-center justify-between px-5 py-4">
+                                        <span class="text-sm font-medium tracking-wide text-zinc-200 uppercase">Bunny
+                                            Lines · Nefertiti Lift · Marionette Lines</span>
+                                        <i data-lucide="plus" class="plus-icon w-4 h-4 text-white flex-shrink-0"></i>
+                                    </summary>
+                                    <div
+                                        class="px-5 pb-4 text-sm text-zinc-500 font-light leading-relaxed border-t border-zinc-800/40 pt-3">
+                                        Bunny lines on the nose bridge, the Nefertiti neck lift, and downturned mouth
+                                        corners — all addressable with precise toxin placement.
+                                    </div>
+                                </details>
+                            </div>
+
+                            <!-- Medical Treatments Section -->
+                            <div class="mt-6 mb-2 pt-4">
+                                <p class="text-xs tracking-[0.25em] text-zinc-500 uppercase mb-3 font-medium">Medical &
+                                    Functional Treatments</p>
+                            </div>
+
+                            <div class="treatment-item">
+                                <details
+                                    class="bg-zinc-900/60 border border-zinc-800/60 rounded-xl overflow-hidden hover:border-zinc-700/60 transition-colors">
+                                    <summary class="flex items-center justify-between px-5 py-4">
+                                        <span class="text-sm font-medium tracking-wide text-zinc-200 uppercase">Masseter
+                                            Reduction (Facial Slimming)</span>
+                                        <i data-lucide="plus" class="plus-icon w-4 h-4 text-white flex-shrink-0"></i>
+                                    </summary>
+                                    <div
+                                        class="px-5 pb-4 text-sm text-zinc-500 font-light leading-relaxed border-t border-zinc-800/40 pt-3">
+                                        Slims a square jaw by reducing the bulk of the masseter muscle. Doubles as
+                                        treatment for bruxism (teeth grinding).
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="treatment-item">
+                                <details
+                                    class="bg-zinc-900/60 border border-zinc-800/60 rounded-xl overflow-hidden hover:border-zinc-700/60 transition-colors">
+                                    <summary class="flex items-center justify-between px-5 py-4">
+                                        <span
+                                            class="text-sm font-medium tracking-wide text-zinc-200 uppercase">Excessive
+                                            Sweating (Hyperhidrosis)</span>
+                                        <i data-lucide="plus" class="plus-icon w-4 h-4 text-white flex-shrink-0"></i>
+                                    </summary>
+                                    <div
+                                        class="px-5 pb-4 text-sm text-zinc-500 font-light leading-relaxed border-t border-zinc-800/40 pt-3">
+                                        Blocks the nerve signals that activate sweat glands — highly effective for
+                                        underarms, hands, and feet. Results last 6–9 months.
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="treatment-item">
+                                <details
+                                    class="bg-zinc-900/60 border border-zinc-800/60 rounded-xl overflow-hidden hover:border-zinc-700/60 transition-colors">
+                                    <summary class="flex items-center justify-between px-5 py-4">
+                                        <span class="text-sm font-medium tracking-wide text-zinc-200 uppercase">Migraine
+                                            Treatment · Trapezius Botox</span>
+                                        <i data-lucide="plus" class="plus-icon w-4 h-4 text-white flex-shrink-0"></i>
+                                    </summary>
+                                    <div
+                                        class="px-5 pb-4 text-sm text-zinc-500 font-light leading-relaxed border-t border-zinc-800/40 pt-3">
+                                        Therapeutic botox for chronic migraine sufferers and neck tension. Trapezius
+                                        reduction ("Barbie Tox") slims the shoulder-neck profile.
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== HOW IT WORKS ===== -->
+        <section class="py-24 bg-zinc-950" id="overview">
+            <div class="max-w-5xl mx-auto px-6">
+                <div class="gold-line mb-20"></div>
+                <div class="text-center mb-16 fade-up">
+                    <p class="text-sm tracking-[0.3em] text-white uppercase mb-4 font-medium">The Process</p>
+                    <h2 class="serif text-4xl md:text-5xl font-light">Your Treatment Journey</h2>
+                </div>
+
+                <div class="grid md:grid-cols-4 gap-6 fade-up">
+                    <div class="text-center p-6">
+                        <div
+                            class="w-12 h-12 rounded-full border border-[#ffffff]/40 flex items-center justify-center mx-auto mb-4">
+                            <span class="serif text-2xl gold-text">01</span>
+                        </div>
+                        <h3 class="font-medium text-zinc-200 mb-2 text-md tracking-wide uppercase">Consultation</h3>
+                        <p class="text-zinc-500 text-sm  font-light leading-relaxed">Detailed medical assessment of your
+                            facial anatomy, goals, and health history.</p>
+                    </div>
+                    <div class="text-center p-6">
+                        <div
+                            class="w-12 h-12 rounded-full border border-[#ffffff]/40 flex items-center justify-center mx-auto mb-4">
+                            <span class="serif text-2xl gold-text">02</span>
+                        </div>
+                        <h3 class="font-medium text-zinc-200 mb-2 text-md tracking-wide uppercase">Treatment Plan</h3>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed">A bespoke plan designed specifically
+                            for your face — no templates, no generic dosing.</p>
+                    </div>
+                    <div class="text-center p-6">
+                        <div
+                            class="w-12 h-12 rounded-full border border-[#ffffff]/40 flex items-center justify-center mx-auto mb-4">
+                            <span class="serif text-2xl gold-text">03</span>
+                        </div>
+                        <h3 class="font-medium text-zinc-200 mb-2 text-md tracking-wide uppercase">The Procedure</h3>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed">Quick 15–30 minute session using
+                            ultra-fine needles. Minimal discomfort. No anesthesia.</p>
+                    </div>
+                    <div class="text-center p-6">
+                        <div
+                            class="w-12 h-12 rounded-full border border-[#ffffff]/40 flex items-center justify-center mx-auto mb-4">
+                            <span class="serif text-2xl gold-text">04</span>
+                        </div>
+                        <h3 class="font-medium text-zinc-200 mb-2 text-md tracking-wide uppercase">Follow-Up</h3>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed">2-week review appointment included.
+                            Full results visible within 7–14 days.</p>
+                    </div>
+                </div>
+
+                <!-- Timeline note -->
+                <div class="mt-12 bg-zinc-900/50 border border-zinc-800/60 rounded-2xl p-6 text-center fade-up">
+                    <p class="text-zinc-400 text-md font-light">
+                        <span class="text-white font-medium">Side effects are minimal and short-lived</span> — minor
+                        redness or swelling at injection sites may occur temporarily.
+                        All treatments are performed by experienced, internationally trained physicians with a strong
+                        focus on safety and natural-looking results.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== WHY AREZU ===== -->
+        <section class="py-24 bg-zinc-900/20" id="why-us">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="gold-line mb-20"></div>
+                <div class="grid lg:grid-cols-2 gap-16 items-center">
+                    <div class="fade-up">
+                        <p class="text-xs tracking-[0.3em] text-white uppercase mb-4 font-medium">Why Choose Us</p>
+                        <h2 class="serif text-4xl md:text-5xl font-light leading-tight mb-6">
+                            Lisbon's Most<br><em class="gold-text">Trusted Clinic</em>
+                        </h2>
+                        <p class="text-zinc-400 font-light text-base leading-relaxed mb-8">
+                            At Arezu Aesthetics, botulinum toxin treatments are performed by experienced,
+                            internationally trained physicians with a strong focus on safety, precision, and
+                            natural-looking results. Never by nurses or unqualified practitioners.
+                        </p>
+
+                        <div class="space-y-5">
+                            <div
+                                class="flex items-center gap-4 p-4 rounded-xl border border-zinc-800/40 bg-zinc-900/30">
+                                <div class="text-2xl">🏥</div>
+                                <div>
+                                    <p class="text-zinc-200 font-medium text-sm">Medical Doctor–Only Treatments</p>
+                                    <p class="text-zinc-500 text-xs font-light mt-0.5">All procedures performed by
+                                        licensed MDs, not aestheticians.</p>
+                                </div>
+                            </div>
+                            <div
+                                class="flex items-center gap-4 p-4 rounded-xl border border-zinc-800/40 bg-zinc-900/30">
+                                <div class="text-2xl">🌍</div>
+                                <div>
+                                    <p class="text-zinc-200 font-medium text-sm">International Training & Certifications
+                                    </p>
+                                    <p class="text-zinc-500 text-xs font-light mt-0.5">Our physicians hold advanced
+                                        qualifications in aesthetic medicine.</p>
+                                </div>
+                            </div>
+                            <div
+                                class="flex items-center gap-4 p-4 rounded-xl border border-zinc-800/40 bg-zinc-900/30">
+                                <div class="text-2xl">✨</div>
+                                <div>
+                                    <p class="text-zinc-200 font-medium text-sm">Natural Results Guarantee</p>
+                                    <p class="text-zinc-500 text-xs font-light mt-0.5">We believe in enhancement that
+                                        looks like you — only better.</p>
+                                </div>
+                            </div>
+                            <div
+                                class="flex items-center gap-4 p-4 rounded-xl border border-zinc-800/40 bg-zinc-900/30">
+                                <div class="text-2xl">📍</div>
+                                <div>
+                                    <p class="text-zinc-200 font-medium text-sm">Premium Lisbon Location</p>
+                                    <p class="text-zinc-500 text-xs font-light mt-0.5">R. Jorge Afonso 13A, 1600-125
+                                        Lisboa — easily accessible clinic.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonials -->
+                    <div class="fade-up space-y-4">
+                        <p class="text-xs tracking-[0.25em] text-zinc-500 uppercase mb-5 font-medium">Patient
+                            Experiences</p>
+
+                        <div class="testimonial-card rounded-2xl p-6">
+                            <div class="flex gap-1 mb-3">
+                                <span class="text-white text-sm">★★★★★</span>
+                            </div>
+                            <p class="text-zinc-300 text-sm font-light leading-relaxed italic">"The most natural result
+                                I've ever had. You can tell Dr. Farsari really understands facial anatomy. I look
+                                refreshed, not frozen."</p>
+                            <p class="text-zinc-600 text-xs mt-3 font-medium uppercase tracking-wide">— Ana M., Lisbon
+                            </p>
+                        </div>
+
+                        <div class="testimonial-card rounded-2xl p-6">
+                            <div class="flex gap-1 mb-3">
+                                <span class="text-white text-sm">★★★★★</span>
+                            </div>
+                            <p class="text-zinc-300 text-sm font-light leading-relaxed italic">"I was nervous about my
+                                first time, but the consultation made me feel completely at ease. The results exceeded
+                                my expectations."</p>
+                            <p class="text-zinc-600 text-xs mt-3 font-medium uppercase tracking-wide">— Sofia R., Porto
+                            </p>
+                        </div>
+
+                        <div class="testimonial-card rounded-2xl p-6">
+                            <div class="flex gap-1 mb-3">
+                                <span class="text-white text-sm">★★★★★</span>
+                            </div>
+                            <p class="text-zinc-300 text-sm font-light leading-relaxed italic">"I came for hyperhidrosis
+                                and now I won't go anywhere else for any treatment. Truly professional and caring team."
+                            </p>
+                            <p class="text-zinc-600 text-xs mt-3 font-medium uppercase tracking-wide">— Miguel F.,
+                                Lisbon</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== ABOUT DR. FORSATI ===== -->
+        <section class="py-24 bg-zinc-950" id="doctor">
+            <div class="max-w-6xl mx-auto px-6">
+
+                <div class="gold-line mb-20"></div>
+
+                <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+                    <!-- Doctor Image -->
+                    <div class="fade-up">
+                        <div class="relative">
+                            <div class="rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-900">
+                                <img src="YOUR-DOCTOR-IMAGE.jpg" alt="Dr. Shokouh Forsati"
+                                    class="w-full h-[650px] object-cover">
+                            </div>
+
+                            <div
+                                class="absolute -top-3 -right-3 h-16 w-16 rounded-tr-xl border-r-2 border-t-2 border-white/20">
+                            </div>
+                            <div
+                                class="absolute -bottom-3 -left-3 h-16 w-16 rounded-bl-xl border-b-2 border-l-2 border-white/20">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="fade-up">
+
+                        <p class="text-xs tracking-[0.3em] text-zinc-400 uppercase mb-4 font-medium">
+                            Medical Director
+                        </p>
+
+                        <h2 class="serif text-4xl md:text-5xl font-light leading-tight mb-6">
+                            Meet Drª.<br>
+                            <span class="text-zinc-100">Shokouh Forsati</span>
+                        </h2>
+
+                        <p class="text-zinc-300 text-lg mb-6 font-light">
+                            International Expertise. Surgical Precision. Natural Results.
+                        </p>
+
+                        <p class="text-zinc-500 leading-relaxed mb-5">
+                            Founder and Medical Director of Arezu Aesthetics Clinic, Drª. Shokouh Forsati is a
+                            board-certified plastic, reconstructive and aesthetic surgeon with more than twelve years of
+                            international surgical experience.
+                        </p>
+
+                        <p class="text-zinc-500 leading-relaxed mb-5">
+                            Having trained and worked across Europe, the United States and Australia, including
+                            prestigious institutions such as Brown University, Drª. Forsati combines advanced surgical
+                            expertise with a refined aesthetic eye and unwavering commitment to patient safety.
+                        </p>
+
+                        <p class="text-zinc-500 leading-relaxed">
+                            Her philosophy is simple: elegant, natural-looking results that enhance rather than alter,
+                            helping patients look refreshed, confident and authentically themselves.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <!-- Credentials -->
+                <div class="mt-20 grid md:grid-cols-2 gap-8">
+
+                    <div class="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-8">
+                        <h3 class="serif text-2xl mb-6 text-zinc-100">
+                            International Training
+                        </h3>
+
+                        <ul class="space-y-4 text-zinc-400">
+                            <li>• Brown University — United States</li>
+                            <li>• Zurich Plastic Surgery Centres</li>
+                            <li>• Sydney Medical Institutions</li>
+                            <li>• Germany & Lisbon Surgical Departments</li>
+                            <li>• International Aesthetic & Reconstructive Training</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-8">
+                        <h3 class="serif text-2xl mb-6 text-zinc-100">
+                            Surgical Background
+                        </h3>
+
+                        <ul class="space-y-4 text-zinc-400">
+                            <li>• Plastic & Reconstructive Surgery</li>
+                            <li>• Aesthetic Surgery</li>
+                            <li>• Burn Surgery</li>
+                            <li>• Hand Surgery</li>
+                            <li>• Intensive Care & Trauma Surgery</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <!-- Expertise -->
+                <div class="mt-20">
+
+                    <div class="text-center mb-12">
+                        <h3 class="serif text-4xl font-light">
+                            Areas of Expertise
+                        </h3>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-8">
+
+                        <div class="bg-zinc-900/40 border border-zinc-800 rounded-2xl p-8">
+                            <p class="text-xs tracking-[0.25em] text-zinc-500 uppercase mb-4">
+                                Surgical Treatments
+                            </p>
+
+                            <ul class="space-y-3 text-zinc-300">
+                                <li>Upper & Lower Eyelid Surgery</li>
+                                <li>Facial Rejuvenation Procedures</li>
+                                <li>Bespoke Aesthetic Surgical Treatments</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-zinc-900/40 border border-zinc-800 rounded-2xl p-8">
+                            <p class="text-xs tracking-[0.25em] text-zinc-500 uppercase mb-4">
+                                Non-Surgical Treatments
+                            </p>
+
+                            <ul class="space-y-3 text-zinc-300">
+                                <li>Natural Botox & Wrinkle Relaxation</li>
+                                <li>Facial Rejuvenation</li>
+                                <li>Natural-Looking Fillers</li>
+                                <li>Skin & Regenerative Treatments</li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Why Patients Choose -->
+                <div class="mt-20 bg-zinc-900/40 border border-zinc-800 rounded-3xl p-10">
+
+                    <div class="text-center mb-10">
+                        <h3 class="serif text-4xl font-light">
+                            Why Patients Choose Drª. Forsati
+                        </h3>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                        <div class="border border-zinc-800 rounded-xl p-5">
+                            <p class="text-zinc-200">Internationally trained plastic surgeon</p>
+                        </div>
+
+                        <div class="border border-zinc-800 rounded-xl p-5">
+                            <p class="text-zinc-200">Over 12 years of surgical experience</p>
+                        </div>
+
+                        <div class="border border-zinc-800 rounded-xl p-5">
+                            <p class="text-zinc-200">Specialist in eyelid rejuvenation</p>
+                        </div>
+
+                        <div class="border border-zinc-800 rounded-xl p-5">
+                            <p class="text-zinc-200">Natural facial aesthetics approach</p>
+                        </div>
+
+                        <div class="border border-zinc-800 rounded-xl p-5">
+                            <p class="text-zinc-200">Personalised treatment plans</p>
+                        </div>
+
+                        <div class="border border-zinc-800 rounded-xl p-5">
+                            <p class="text-zinc-200">Safety-first philosophy</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- CTA -->
+                <div class="text-center mt-20">
+
+                    <h3 class="serif text-4xl font-light mb-6">
+                        Book a Consultation
+                    </h3>
+
+                    <p class="max-w-2xl mx-auto text-zinc-500 mb-8">
+                        Whether you are considering a surgical procedure or a subtle non-surgical treatment, Drª.
+                        Forsati and the Arezu team are committed to delivering personalised care and refined,
+                        natural-looking results.
+                    </p>
+
+                    <a href="#book"
+                        class="inline-flex items-center rounded-xl bg-white px-8 py-4 text-sm font-semibold text-zinc-950 transition hover:opacity-90">
+                        Schedule Consultation →
+                    </a>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ===== FAQ SECTION ===== -->
+        <section class="py-32 bg-zinc-950" id="faq">
+
+            <div class="max-w-6xl mx-auto px-6">
+
+                <div class="h-px bg-gradient-to-r from-transparent via-zinc-700 to-transparent mb-24"></div>
+
+                <div class="grid lg:grid-cols-[0.8fr_1.2fr] gap-20">
+
+                    <!-- Left Side -->
+                    <div>
+
+                        <p class="text-xs tracking-[0.35em] uppercase text-zinc-500 mb-4">
+                            Common Questions
+                        </p>
+
+                        <h2 class="serif text-5xl md:text-6xl font-light text-zinc-100 leading-tight">
+                            Frequently<br>
+                            Asked Questions
+                        </h2>
+
+                        <p class="mt-6 text-zinc-500 leading-relaxed">
+                            Everything you need to know before booking your consultation.
+                        </p>
+
+                    </div>
+
+                    <!-- Right Side -->
+                    <div class="space-y-4">
+
+                        <!-- FAQ Item -->
+                        <details class="group border border-zinc-800 rounded-2xl bg-zinc-900/30 overflow-hidden">
+
+                            <summary class="cursor-pointer list-none px-8 py-6 flex justify-between items-center">
+
+                                <span class="text-zinc-100 font-medium">
+                                    Does Botox hurt?
+                                </span>
+
+                                <span class="text-zinc-500 group-open:rotate-45 transition duration-300 text-2xl">
+                                    +
+                                </span>
+
+                            </summary>
+
+                            <div class="px-8 pb-6 text-zinc-500 leading-relaxed">
+                                Most patients report only mild, brief discomfort similar to a tiny pinch. Ultra-fine
+                                needles are used and the procedure takes only a few minutes.
+                            </div>
+
+                        </details>
+
+                        <details class="group border border-zinc-800 rounded-2xl bg-zinc-900/30 overflow-hidden">
+
+                            <summary class="cursor-pointer list-none px-8 py-6 flex justify-between items-center">
+
+                                <span class="text-zinc-100 font-medium">
+                                    When will I see results?
+                                </span>
+
+                                <span class="text-zinc-500 group-open:rotate-45 transition duration-300 text-2xl">
+                                    +
+                                </span>
+
+                            </summary>
+
+                            <div class="px-8 pb-6 text-zinc-500 leading-relaxed">
+                                Initial effects are visible within 3–5 days, with full results appearing after 7–14
+                                days.
+                            </div>
+
+                        </details>
+
+                        <details class="group border border-zinc-800 rounded-2xl bg-zinc-900/30 overflow-hidden">
+
+                            <summary class="cursor-pointer list-none px-8 py-6 flex justify-between items-center">
+
+                                <span class="text-zinc-100 font-medium">
+                                    How long do results last?
+                                </span>
+
+                                <span class="text-zinc-500 group-open:rotate-45 transition duration-300 text-2xl">
+                                    +
+                                </span>
+
+                            </summary>
+
+                            <div class="px-8 pb-6 text-zinc-500 leading-relaxed">
+                                Results generally last between 3–6 months depending on treatment area and individual
+                                factors.
+                            </div>
+
+                        </details>
+
+                        <details class="group border border-zinc-800 rounded-2xl bg-zinc-900/30 overflow-hidden">
+
+                            <summary class="cursor-pointer list-none px-8 py-6 flex justify-between items-center">
+
+                                <span class="text-zinc-100 font-medium">
+                                    Will I look frozen or unnatural?
+                                </span>
+
+                                <span class="text-zinc-500 group-open:rotate-45 transition duration-300 text-2xl">
+                                    +
+                                </span>
+
+                            </summary>
+
+                            <div class="px-8 pb-6 text-zinc-500 leading-relaxed">
+                                No. Our philosophy focuses on natural facial harmony and subtle enhancement rather than
+                                overcorrection.
+                            </div>
+
+                        </details>
+
+                    </div>
+
+                </div>
+
+                <!-- Bottom CTA Card -->
+
+                <div class="mt-20">
+
+                    <div class="rounded-3xl border border-zinc-800 bg-zinc-900/40 p-10 text-center">
+
+                        <p class="text-zinc-500 mb-3">
+                            Still have questions?
+                        </p>
+
+                        <h3 class="serif text-3xl md:text-4xl font-light text-zinc-100 mb-6">
+                            Speak With Our Medical Team
+                        </h3>
+
+                        <p class="max-w-2xl mx-auto text-zinc-500 mb-8">
+                            We're happy to answer any questions regarding treatments, suitability, recovery or expected
+                            results.
+                        </p>
+
+                        <a href="#book"
+                            class="inline-flex items-center rounded-xl bg-white px-8 py-4 text-sm font-semibold text-zinc-950 hover:opacity-90 transition">
+                            Book Consultation →
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ===== BOOK CONSULTATION CTA ===== -->
+        <section id="book" class="relative overflow-hidden py-32 bg-black">
+            <div class="gold-line mb-20"></div>
+
+            <!-- Grid Background -->
+            <div class="absolute inset-0" style="
+        background-image:
+        linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+        background-size: 40px 40px;
+    ">
+            </div>
+
+            <!-- Main Glow -->
+            <div class="absolute inset-0" style="
+            background:
+            radial-gradient(
+                circle at center,
+                rgba(255,255,255,0.08) 0%,
+                rgba(255,255,255,0.03) 35%,
+                transparent 70%
+            );
+        ">
+            </div>
+
+            <!-- Bottom Spotlight -->
+            <div class="absolute -bottom-48 left-1/2 -translate-x-1/2 w-[1200px] h-[500px]" style="
+            background:
+            radial-gradient(
+                ellipse at center,
+                rgba(255,255,255,0.08) 0%,
+                transparent 70%
+            );
+        ">
+            </div>
+
+            <!-- Dark Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60"></div>
+
+            <!-- Content -->
+            <div class="relative z-10 max-w-4xl mx-auto px-6 text-center fade-up">
+
+                <p class="text-xs tracking-[0.35em] uppercase text-zinc-500 mb-6 font-medium">
+                    BOOK YOUR CONSULTATION
+                </p>
+
+                <h2 class="serif text-5xl md:text-7xl font-light text-zinc-100 leading-none mb-8">
+                    Ready To Begin<br>
+                    <span class="italic text-zinc-300">
+                        Your Transformation?
+                    </span>
+                </h2>
+
+                <p class="max-w-2xl mx-auto text-zinc-500 text-lg leading-relaxed mb-12 font-light">
+                    Meet with our medical team for a personalised consultation.
+                    We'll discuss your goals, answer your questions and create a bespoke treatment plan tailored
+                    specifically to you.
+                </p>
+
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row justify-center gap-4 mb-12">
+
+                    <a href="tel:+351912493035"
+                        class="inline-flex items-center justify-center gap-3 bg-white text-black font-semibold px-8 py-4 rounded-xl hover:bg-zinc-200 transition-all shadow-[0_0_40px_rgba(255,255,255,0.15)]">
+
+                        <i data-lucide="phone" class="w-4 h-4"></i>
+                        Call +351 912 493 035
+                    </a>
+
+                    <a href="mailto:info@arezuaesthetics.com"
+                        class="inline-flex items-center justify-center gap-3 border border-zinc-700 text-zinc-300 hover:border-zinc-500 hover:text-white px-8 py-4 rounded-xl transition-all">
+
+                        <i data-lucide="mail" class="w-4 h-4"></i>
+                        Email Us
+                    </a>
+
+                </div>
+
+                <!-- WhatsApp -->
+                <a href="https://wa.me/351912493035"
+                    class="inline-flex items-center gap-2 text-zinc-500 hover:text-zinc-300 transition-colors text-sm">
+
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" />
+                    </svg>
+
+                    Or message us on WhatsApp
+                </a>
+
+                <!-- Divider -->
+                <div class="max-w-3xl mx-auto mt-16 mb-10">
+                    <div class="h-px bg-gradient-to-r from-transparent via-zinc-700 to-transparent"></div>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+
+                    <div>
+                        <p class="text-zinc-300 text-sm uppercase tracking-wider mb-2">
+                            Call
+                        </p>
+
+                        <p class="text-zinc-500 text-sm">
+                            +351 912 493 035
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="text-zinc-300 text-sm uppercase tracking-wider mb-2">
+                            Email
+                        </p>
+
+                        <p class="text-zinc-500 text-sm">
+                            info@arezuaesthetics.com
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="text-zinc-300 text-sm uppercase tracking-wider mb-2">
+                            Visit
+                        </p>
+
+                        <p class="text-zinc-500 text-sm">
+                            R. Jorge Afonso 13A, 1600-125 Lisboa
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ===== FOOTER ===== -->
+        <footer class="bg-zinc-950 border-t border-zinc-900 py-12">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-10 mb-12">
+                    <!-- Brand -->
+                    <div class="col-span-2 md:col-span-1">
+                        <div class="inline-block px-3 py-2 mb-4">
+                            <p class="serif text-lg font-medium tracking-[0.15em] text-zinc-300 uppercase">
+                                AREZU<br><span class="text-[10px] tracking-[0.3em] font-light">AESTHETICS</span></p>
+                        </div>
+                        <p class="text-zinc-600 text-sm font-light leading-relaxed">Premium aesthetic medicine in
+                            Lisbon. Natural results, medical excellence.</p>
+                        <div class="flex gap-3 mt-4">
+                            <a href="#"
+                                class="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center hover:border-[#ffffff]/40 transition-colors">
+                                <svg class="w-4 h-4 text-zinc-400" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                                </svg>
+                            </a>
+                            <a href="#"
+                                class="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center hover:border-[#ffffff]/40 transition-colors">
+                                <svg class="w-4 h-4 text-zinc-400" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.12 8.12 0 004.85 1.6V6.83a4.85 4.85 0 01-1.08-.14z" />
+                                </svg>
+                            </a>
+                            <a href="#"
+                                class="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center hover:border-[#ffffff]/40 transition-colors">
+                                <svg class="w-4 h-4 text-zinc-400" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Plastic Surgery -->
+                    <div>
+                        <p class="text-zinc-400 font-medium text-sm tracking-[0.2em] uppercase mb-4">Plastic Surgery</p>
+                        <ul class="space-y-2">
+                            <li><a href="#"
+                                    class="text-zinc-600 hover:text-zinc-400 text-sm font-light transition-colors">Blepharoplasty</a>
+                            </li>
+                            <li><a href="#"
+                                    class="text-zinc-600 hover:text-zinc-400 text-sm font-light transition-colors">Brow
+                                    & Forehead Lift</a></li>
+                            <li><a href="#"
+                                    class="text-zinc-600 hover:text-zinc-400 text-sm font-light transition-colors">Dermatological
+                                    Surgery</a></li>
+                            <li><a href="#"
+                                    class="text-zinc-600 hover:text-zinc-400 text-sm font-light transition-colors">Female
+                                    Intimate Surgery</a></li>
+                            <li><a href="#"
+                                    class="text-zinc-600 hover:text-zinc-400 text-sm font-light transition-colors">Bullhorn
+                                    Lip Lift</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Aesthetic Medicine -->
+                    <div>
+                        <p class="text-zinc-400 font-medium text-sm tracking-[0.2em] uppercase mb-4">Aesthetic Medicine
+                        </p>
+                        <ul class="space-y-2">
+                            <li><a href="#"
+                                    class="text-zinc-600 hover:text-white text-sm font-semibold transition-colors">Botulinum
+                                    Toxin (Botox®)</a></li>
+                            <li><a href="#"
+                                    class="text-zinc-600 hover:text-zinc-400 text-sm font-light transition-colors">Hyaluronic
+                                    Acid</a></li>
+                            <li><a href="#"
+                                    class="text-zinc-600 hover:text-zinc-400 text-sm font-light transition-colors">Skin
+                                    Rejuvenation</a></li>
+                            <li><a href="#"
+                                    class="text-zinc-600 hover:text-zinc-400 text-sm font-light transition-colors">Thread
+                                    Lifts</a></li>
+                            <li><a href="#"
+                                    class="text-zinc-600 hover:text-zinc-400 text-sm font-light transition-colors">Injection
+                                    Lipolysis</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Contacts -->
+                    <div>
+                        <p class="text-zinc-400 font-medium text-sm tracking-[0.2em] uppercase mb-4">Contacts</p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-2 text-zinc-600 text-sm font-light">
+                                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-white flex-shrink-0 mt-0.5"></i>
+                                R. Jorge Afonso 13A,<br>1600-125 Lisboa
+                            </li>
+                            <li class="flex items-center gap-2 text-zinc-600 text-sm font-light">
+                                <i data-lucide="phone" class="w-3.5 h-3.5 text-white flex-shrink-0"></i>
+                                +351 912 493 035
+                            </li>
+                            <li class="flex items-center gap-2 text-zinc-600 text-sm font-light">
+                                <i data-lucide="mail" class="w-3.5 h-3.5 text-white flex-shrink-0"></i>
+                                info@arezuaesthetics.com
+                            </li>
+                        </ul>
+                        <a href="#book"
+                            class="mt-5 inline-block btn-gold text-zinc-950 text-sm font-semibold px-4 py-2.5 rounded-lg tracking-wide">
+                            Request Appointment →
+                        </a>
+                    </div>
+                </div>
+
+                <div class="gold-line mb-8"></div>
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-10">
+                    <p class="text-zinc-700 text-sm">© 2025 Arezu Aesthetics. All rights reserved.</p>
+                    <div class="flex gap-6">
+                        <a href="#" class="text-zinc-700 hover:text-zinc-500 text-sm transition-colors">Terms &
+                            Conditions</a>
+                        <a href="#" class="text-zinc-700 hover:text-zinc-500 text-sm transition-colors">Privacy
+                            Policy</a>
+                        <a href="#" class="text-zinc-700 hover:text-zinc-500 text-sm transition-colors">Sitemap</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Sticky CTA Bar (appears after scroll) -->
+        <div x-show="showSticky" x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="translate-y-full opacity-0" x-transition:enter-end="translate-y-0 opacity-100"
+            class="sticky-bar fixed bottom-0 left-0 right-0 z-40 px-6 py-3 flex items-center justify-between">
+            <div class="hidden sm:block">
+                <p class="text-zinc-300 text-sm font-medium">Botulinum Toxin (Botox®) — Arezu Aesthetics, Lisbon</p>
+                <p class="text-zinc-600 text-xs">Internationally trained physicians · Natural results guaranteed</p>
+            </div>
+            <div class="flex gap-3 w-full sm:w-auto">
+                <a href="tel:+351912493035"
+                    class="flex-1 sm:flex-none border border-zinc-700 text-zinc-300 hover:text-zinc-100 px-4 py-2.5 rounded-lg text-sm text-center transition-colors flex items-center justify-center gap-2">
+                    <i data-lucide="phone" class="w-4 h-4"></i>
+                    <span class="hidden sm:inline">Call Now</span>
+                </a>
+                <a href="#book"
+                    class="flex-1 sm:flex-none btn-gold text-zinc-950 font-semibold px-5 py-2.5 rounded-lg text-sm text-center">
+                    Book Consultation
+                </a>
+            </div>
+        </div>
+
+        <!-- WhatsApp float button -->
+        <a href="https://wa.me/351912493035"
+            class="fixed bottom-20 right-5 z-50 w-12 h-12 rounded-full bg-green-500 hover:bg-green-400 flex items-center justify-center shadow-lg shadow-green-900/40 transition-all hover:scale-110"
+            title="WhatsApp">
+            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+            </svg>
+        </a>
+    </main>
+
+
+    <!-- Initialize Lucide Icons for Vanilla Elements -->
+    <script>
+        lucide.createIcons();
+
+        // Intersection Observer for fade-up animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        // Re-run lucide after Alpine renders
+        document.addEventListener('alpine:initialized', () => {
+            lucide.createIcons();
+        });
+    </script>
+</body>
+
+</html>
