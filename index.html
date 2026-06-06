@@ -125,6 +125,25 @@
             border-top: 1px solid rgba(255, 255, 255, .08);
         }
 
+        /* Google Translate Hide */
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        }
+
+        body {
+            top: 0 !important;
+        }
+
+        .goog-logo-link,
+        .goog-te-gadget,
+        .goog-te-gadget span {
+            display: none !important;
+        }
+
+        #google_translate_element {
+            display: none !important;
+        }
+
         /* Mobile */
         @media (max-width:768px) {
             .mobile-hidden {
@@ -158,28 +177,68 @@
                         <a href="#" class="flex items-center space-x-3">
                             <div class="px-3 py-1.5">
                                 <span
-                                    class="serif text-sm font-medium tracking-[0.15em] text-zinc-100 uppercase">AREZU<br><span
-                                        class="text-[10px] tracking-[0.3em] font-light">AESTHETICS</span></span>
+                                    class="serif text-sm font-medium tracking-[0.15em] text-zinc-100 uppercase notranslate">
+                                    AREZU<br>
+                                    <span class="text-[10px] tracking-[0.3em] font-light">
+                                        AESTHETICS
+                                    </span>
+                                </span>
                             </div>
                         </a>
 
-                        <!-- Hamburger Toggle Button (Mobile) -->
-                        <button @click="menuState = !menuState" aria-label="Toggle Menu"
-                            class="relative z-20 -m-2.5 mr-1 block cursor-pointer p-2.5 lg:hidden text-zinc-100">
-                            <i data-lucide="menu" class="w-6 h-6 transition-transform" x-show="!menuState"></i>
-                            <i data-lucide="x" class="w-6 h-6 transition-transform" x-show="menuState" x-cloak></i>
-                        </button>
+                        <!-- Mobile Right Side -->
+                        <div class="flex items-center gap-4 lg:hidden">
+
+                            <!-- Mobile Language Switcher -->
+                            <div class="flex items-center text-xs tracking-[0.18em] uppercase">
+
+                                <button id="lang-en-mobile" onclick="changeLanguage('en')"
+                                    class="font-medium text-zinc-100 hover:text-zinc-300 transition-colors duration-200">
+                                    EN
+                                </button>
+
+                                <span class="mx-2 text-zinc-700">|</span>
+
+                                <button id="lang-pt-mobile" onclick="changeLanguage('pt')"
+                                    class="text-zinc-500 hover:text-zinc-300 transition-colors duration-200">
+                                    PT
+                                </button>
+
+                            </div>
+
+                            <!-- Hamburger Toggle Button -->
+                            <button @click="menuState = !menuState" aria-label="Toggle Menu"
+                                class="relative z-20 -m-2.5 block cursor-pointer p-2.5 text-zinc-100">
+
+                                <i data-lucide="menu" class="w-6 h-6 transition-transform" x-show="!menuState"></i>
+
+                                <i data-lucide="x" class="w-6 h-6 transition-transform" x-show="menuState" x-cloak></i>
+
+                            </button>
+
+                        </div>
+
                     </div>
 
-                    <!-- Desktop Links (Hidden on Mobile) -->
+                    <!-- Desktop Navigation -->
                     <div class="hidden lg:flex flex-1 justify-center">
                         <ul class="flex gap-8 text-sm">
-                            <li><a href="#treatments"
-                                    class="text-zinc-400 hover:text-zinc-100 duration-150">Treatments</a></li>
-                            <li><a href="#overview" class="text-zinc-400 hover:text-zinc-100 duration-150">How It
-                                    Works</a></li>
+                            <li>
+                                <a href="#treatments" class="text-zinc-400 hover:text-zinc-100 duration-150">
+                                    Treatments
+                                </a>
+                            </li>
 
-                            <li><a href="#why-us" class="text-zinc-400 hover:text-zinc-100 duration-150">Why Arezu</a>
+                            <li>
+                                <a href="#overview" class="text-zinc-400 hover:text-zinc-100 duration-150">
+                                    How It Works
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#why-us" class="text-zinc-400 hover:text-zinc-100 duration-150">
+                                    Why Arezu
+                                </a>
                             </li>
 
                             <li>
@@ -188,83 +247,89 @@
                                 </a>
                             </li>
 
-                            <li><a href="#about" class="text-zinc-400 hover:text-zinc-100 duration-150">FAQ</a></li>
+                            <li>
+                                <a href="#faq" class="text-zinc-400 hover:text-zinc-100 duration-150">
+                                    FAQ
+                                </a>
+                            </li>
                         </ul>
                     </div>
 
-                    <!-- Mobile Navigation Panel & Desktop Dynamic Right Section -->
+                    <!-- Mobile Menu + Desktop Right Section -->
                     <div :class="menuState ? 'block bg-zinc-950 border border-zinc-800 rounded-3xl p-6 shadow-2xl mt-4 space-y-6' : 'hidden lg:block'"
                         class="w-full lg:flex lg:w-fit lg:items-center lg:gap-6">
 
-                        <!-- Links only visible inside mobile accordion panel -->
+                        <!-- Mobile Navigation -->
                         <div class="lg:hidden">
                             <ul class="space-y-4 text-base">
-                                <li><a href="#treatments" @click="menuState = false"
-                                        class="text-zinc-400 hover:text-zinc-100 block duration-150">Treatments</a></li>
-                                <li><a href="#overview" @click="menuState = false"
-                                        class="text-zinc-400 hover:text-zinc-100 block duration-150">How it works</a>
+
+                                <li>
+                                    <a href="#treatments" @click="menuState = false"
+                                        class="text-zinc-400 hover:text-zinc-100 block duration-150">
+                                        Treatments
+                                    </a>
                                 </li>
-                                <li><a href="#why-us" @click="menuState = false"
-                                        class="text-zinc-400 hover:text-zinc-100 block duration-150">Why Arezu</a></li>
-                                <li><a href="#about" @click="menuState = false"
-                                        class="text-zinc-400 hover:text-zinc-100 block duration-150">About Doctor</a>
+
+                                <li>
+                                    <a href="#overview" @click="menuState = false"
+                                        class="text-zinc-400 hover:text-zinc-100 block duration-150">
+                                        How It Works
+                                    </a>
                                 </li>
-                                <li><a href="#faq" @click="menuState = false"
-                                        class="text-zinc-400 hover:text-zinc-100 block duration-150">FAQ</a></li>
+
+                                <li>
+                                    <a href="#why-us" @click="menuState = false"
+                                        class="text-zinc-400 hover:text-zinc-100 block duration-150">
+                                        Why Arezu
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#doctor" @click="menuState = false"
+                                        class="text-zinc-400 hover:text-zinc-100 block duration-150">
+                                        About Doctor
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#faq" @click="menuState = false"
+                                        class="text-zinc-400 hover:text-zinc-100 block duration-150">
+                                        FAQ
+                                    </a>
+                                </li>
+
                             </ul>
                         </div>
 
-                        <!-- Dynamic Buttons dependent on page layout header position -->
+                        <!-- Desktop Right Controls -->
                         <div
                             class="flex w-full flex-col space-y-3 sm:flex-row sm:items-center sm:gap-4 sm:space-y-0 md:w-fit">
 
-                            <!-- Language Switcher -->
-                            <div x-data="{ lang: 'EN' }"
-                                class="hidden lg:flex items-center text-xs tracking-[0.18em] uppercase">
+                            <!-- Desktop Language Switcher -->
+                            <div class="hidden lg:flex items-center text-xs tracking-[0.18em] uppercase">
 
-                                <button @click="lang = 'EN'" :class="lang === 'EN'
-                ? 'font-medium text-zinc-100'
-                : 'font-light text-zinc-500 hover:text-zinc-300'" class="transition-colors duration-200">
+                                <button id="lang-en-desktop" onclick="changeLanguage('en')"
+                                    class="font-medium text-zinc-100 hover:text-zinc-300 transition-colors duration-200">
                                     EN
                                 </button>
 
                                 <span class="mx-2 text-zinc-700">|</span>
 
-                                <button @click="lang = 'PT'" :class="lang === 'PT'
-                ? 'font-medium text-zinc-100'
-                : 'font-light text-zinc-500 hover:text-zinc-300'" class="transition-colors duration-200">
-                                    PT
-                                </button>
-
-                            </div>
-
-                            <!-- Mobile Language Switcher -->
-                            <div x-data="{ lang: 'EN' }"
-                                class="flex items-center justify-center text-xs tracking-[0.18em] uppercase lg:hidden">
-
-                                <button @click="lang = 'EN'" :class="lang === 'EN'
-                ? 'font-medium text-zinc-100'
-                : 'font-light text-zinc-500'" class="transition-colors duration-200">
-                                    EN
-                                </button>
-
-                                <span class="mx-2 text-zinc-700">|</span>
-
-                                <button @click="lang = 'PT'" :class="lang === 'PT'
-                ? 'font-medium text-zinc-100'
-                : 'font-light text-zinc-500'" class="transition-colors duration-200">
+                                <button id="lang-pt-desktop" onclick="changeLanguage('pt')"
+                                    class="text-zinc-500 hover:text-zinc-300 transition-colors duration-200">
                                     PT
                                 </button>
 
                             </div>
 
                             <!-- CTA Button -->
-                            <a href="#" :class="isScrolled ? 'lg:inline-flex' : 'hidden'"
+                            <a href="#contact" :class="isScrolled ? 'lg:inline-flex' : 'hidden'"
                                 class="inline-flex items-center justify-center text-sm font-medium bg-zinc-100 text-zinc-950 rounded-lg px-4 py-2 hover:bg-zinc-200 transition-colors">
                                 Book Appointment
                             </a>
 
                         </div>
+
                     </div>
 
                 </div>
@@ -849,8 +914,8 @@
                     <div class="fade-up">
                         <div class="relative">
                             <div class="rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-900">
-                                <img src="https://arezuaesthetics.com/wp-content/uploads/2025/12/Untitled-design-1.png" alt="Dr. Shokouh Forsati"
-                                    class="w-full h-[650px] object-cover">
+                                <img src="https://arezuaesthetics.com/wp-content/uploads/2025/12/Untitled-design-1.png"
+                                    alt="Dr. Shokouh Forsati" class="w-full h-[650px] object-cover">
                             </div>
 
                             <div
@@ -1326,7 +1391,7 @@
                     <!-- Brand -->
                     <div class="col-span-2 md:col-span-1">
                         <div class="inline-block px-3 py-2 mb-4">
-                            <p class="serif text-lg font-medium tracking-[0.15em] text-zinc-300 uppercase">
+                            <p class="serif text-lg font-medium tracking-[0.15em] text-zinc-300 uppercase notranslate">
                                 AREZU<br><span class="text-[10px] tracking-[0.3em] font-light">AESTHETICS</span></p>
                         </div>
                         <p class="text-zinc-600 text-sm font-light leading-relaxed">Premium aesthetic medicine in
@@ -1492,6 +1557,89 @@
             lucide.createIcons();
         });
     </script>
+
+    <div id="google_translate_element" style="display:none;"></div>
+
+    <script>
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,pt',
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+
+        function changeLanguage(lang) {
+
+            // Desktop buttons
+            const enBtnDesktop = document.getElementById('lang-en-desktop');
+            const ptBtnDesktop = document.getElementById('lang-pt-desktop');
+
+            // Mobile buttons
+            const enBtnMobile = document.getElementById('lang-en-mobile');
+            const ptBtnMobile = document.getElementById('lang-pt-mobile');
+
+            if (lang === 'en') {
+
+                [enBtnDesktop, enBtnMobile].forEach(btn => {
+                    if (btn) {
+                        btn.classList.add('font-medium', 'text-zinc-100');
+                        btn.classList.remove('text-zinc-500');
+                    }
+                });
+
+                [ptBtnDesktop, ptBtnMobile].forEach(btn => {
+                    if (btn) {
+                        btn.classList.remove('font-medium', 'text-zinc-100');
+                        btn.classList.add('text-zinc-500');
+                    }
+                });
+
+            } else {
+
+                [ptBtnDesktop, ptBtnMobile].forEach(btn => {
+                    if (btn) {
+                        btn.classList.add('font-medium', 'text-zinc-100');
+                        btn.classList.remove('text-zinc-500');
+                    }
+                });
+
+                [enBtnDesktop, enBtnMobile].forEach(btn => {
+                    if (btn) {
+                        btn.classList.remove('font-medium', 'text-zinc-100');
+                        btn.classList.add('text-zinc-500');
+                    }
+                });
+            }
+
+            localStorage.setItem('siteLanguage', lang);
+
+            const interval = setInterval(() => {
+                const select = document.querySelector('.goog-te-combo');
+
+                if (select) {
+                    select.value = lang;
+                    select.dispatchEvent(new Event('change'));
+                    clearInterval(interval);
+                }
+            }, 300);
+        }
+    </script>
+
+    <script>
+        window.addEventListener('load', () => {
+            const savedLang = localStorage.getItem('siteLanguage');
+
+            if (savedLang) {
+                setTimeout(() => {
+                    changeLanguage(savedLang);
+                }, 1500);
+            }
+        });
+    </script>
+
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 </body>
 
 </html>
