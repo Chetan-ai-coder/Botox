@@ -1441,15 +1441,12 @@
                         <div class="bg-zinc-900/50 border border-zinc-800 rounded-3xl p-8 md:p-10">
 
                             <!-- 1. ADDED ACTION AND METHOD HERE -->
-                            <form id="appointment-form" class="space-y-6">
+                            <form id="consultation-form" class="space-y-6">
 
-                                <!-- Web3Forms Access Key -->
                                 <input type="hidden" name="access_key" value="22fa5c3a-ff8a-4758-b14a-f8c71a8e06e7">
 
-                                <!-- Email Subject -->
                                 <input type="hidden" name="subject" value="New Botox Consultation Request">
 
-                                <!-- Spam Protection -->
                                 <input type="checkbox" name="botcheck" style="display:none;">
 
                                 <div class="grid md:grid-cols-2 gap-6">
@@ -1906,20 +1903,22 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
 
-            const form = document.getElementById("appointment-form");
+            const form = document.getElementById("consultation-form");
 
-            if (!form) return;
+            if (!form) {
+                console.error("Form not found");
+                return;
+            }
 
             form.addEventListener("submit", async (e) => {
 
                 e.preventDefault();
 
-                const submitBtn = form.querySelector('button[type="submit"]');
+                const button = form.querySelector('button[type="submit"]');
+                const originalText = button.innerHTML;
 
-                const originalText = submitBtn.innerHTML;
-
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = "Submitting...";
+                button.disabled = true;
+                button.innerHTML = "Submitting...";
 
                 try {
 
@@ -1943,21 +1942,20 @@
 
                     } else {
 
-                        alert("❌ Submission failed. Please try again.");
-
+                        alert("❌ " + (result.message || "Submission failed"));
                         console.log(result);
                     }
 
                 } catch (error) {
 
                     console.error(error);
-
                     alert("❌ Network error. Please try again.");
 
                 } finally {
 
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalText;
+                    button.disabled = false;
+                    button.innerHTML = originalText;
+
                 }
 
             });
