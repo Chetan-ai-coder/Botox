@@ -9,6 +9,8 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -150,6 +152,165 @@
                 display: none;
             }
         }
+
+        /* Images Section */
+
+        .selector-wrapper {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 20px;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .hero h1 {
+            font-size: 60px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            opacity: 0;
+            animation: fadeTop .8s forwards;
+        }
+
+        .hero p {
+            max-width: 700px;
+            color: #cfcfcf;
+            font-size: 20px;
+            opacity: 0;
+            animation: fadeTop .8s .3s forwards;
+        }
+
+        .options {
+            width: 100%;
+            max-width: 900px;
+            height: 420px;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .option {
+            position: relative;
+            flex: 1;
+            cursor: pointer;
+            overflow: hidden;
+            border: 2px solid #292929;
+            transition: .7s ease;
+            background-size: auto 120%;
+            background-position: center;
+            opacity: 0;
+            transform: translateX(-60px);
+        }
+
+        .option.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .option.active {
+            flex: 7;
+            border-color: #fff;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .5);
+            z-index: 10;
+            background-size: auto 100%;
+        }
+
+        .shadow {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 140px;
+            background: linear-gradient(to top,
+                    rgba(0, 0, 0, .85),
+                    transparent);
+        }
+
+        .label {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 2;
+        }
+
+        .icon {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(32, 32, 32, .85);
+            backdrop-filter: blur(10px);
+            border: 2px solid #444;
+        }
+
+        .icon i {
+            color: #fff;
+        }
+
+        .info {
+            overflow: hidden;
+        }
+
+        .main,
+        .sub {
+            transform: translateX(25px);
+            opacity: 0;
+            transition: .7s ease;
+        }
+
+        .main {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .sub {
+            color: #ddd;
+            margin-top: 5px;
+        }
+
+        .option.active .main,
+        .option.active .sub {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        @keyframes fadeTop {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media(max-width:768px) {
+
+            .options {
+                height: 350px;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+        }
     </style>
 
     <!-- Alpine.js CDN (For simple reactive menu & scroll interactions) -->
@@ -175,14 +336,9 @@
                     <div class="flex w-full justify-between lg:w-auto">
 
                         <a href="#" class="flex items-center space-x-3">
-                            <div class="px-3 py-1.5">
-                                <span
-                                    class="serif text-sm font-medium tracking-[0.15em] text-zinc-100 uppercase notranslate">
-                                    AREZU<br>
-                                    <span class="text-[10px] tracking-[0.3em] font-light">
-                                        AESTHETICS
-                                    </span>
-                                </span>
+                            <div class="px-3">
+                                <img src="https://arezuaesthetics.com/wp-content/uploads/2021/05/image1.png" alt=""
+                                    class="h-20 w-auto">
                             </div>
                         </a>
 
@@ -224,32 +380,36 @@
                     <div class="hidden lg:flex flex-1 justify-center">
                         <ul class="flex gap-8 text-sm">
                             <li>
-                                <a href="#treatments" class="text-zinc-400 hover:text-zinc-100 duration-150">
+                                <a href="https://arezuaesthetics.com/services/"
+                                    class="text-zinc-400 hover:text-zinc-100 duration-150">
+                                    Services
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="https://arezuaesthetics.com/services/"
+                                    class="text-zinc-400 hover:text-zinc-100 duration-150">
                                     Treatments
                                 </a>
                             </li>
 
                             <li>
-                                <a href="#overview" class="text-zinc-400 hover:text-zinc-100 duration-150">
-                                    How It Works
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="#why-us" class="text-zinc-400 hover:text-zinc-100 duration-150">
-                                    Why Arezu
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="#doctor" class="text-zinc-400 hover:text-zinc-100 duration-150">
-                                    About Doctor
+                                <a href="https://arezuaesthetics.com/about-us/"
+                                    class="text-zinc-400 hover:text-zinc-100 duration-150">
+                                    About
                                 </a>
                             </li>
 
                             <li>
                                 <a href="#faq" class="text-zinc-400 hover:text-zinc-100 duration-150">
                                     FAQ
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="https://arezuaesthetics.com/contact-us/"
+                                    class="text-zinc-400 hover:text-zinc-100 duration-150">
+                                    Contact
                                 </a>
                             </li>
                         </ul>
@@ -264,30 +424,23 @@
                             <ul class="space-y-4 text-base">
 
                                 <li>
-                                    <a href="#treatments" @click="menuState = false"
+                                    <a href="https://arezuaesthetics.com/services/" @click="menuState = false"
+                                        class="text-zinc-400 hover:text-zinc-100 block duration-150">
+                                        Services
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="https://arezuaesthetics.com/services/" @click="menuState = false"
                                         class="text-zinc-400 hover:text-zinc-100 block duration-150">
                                         Treatments
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="#overview" @click="menuState = false"
+                                    <a href="https://arezuaesthetics.com/about-us/" @click="menuState = false"
                                         class="text-zinc-400 hover:text-zinc-100 block duration-150">
-                                        How It Works
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#why-us" @click="menuState = false"
-                                        class="text-zinc-400 hover:text-zinc-100 block duration-150">
-                                        Why Arezu
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#doctor" @click="menuState = false"
-                                        class="text-zinc-400 hover:text-zinc-100 block duration-150">
-                                        About Doctor
+                                        About
                                     </a>
                                 </li>
 
@@ -295,6 +448,13 @@
                                     <a href="#faq" @click="menuState = false"
                                         class="text-zinc-400 hover:text-zinc-100 block duration-150">
                                         FAQ
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="https://arezuaesthetics.com/contact-us/" @click="menuState = false"
+                                        class="text-zinc-400 hover:text-zinc-100 block duration-150">
+                                        Contact
                                     </a>
                                 </li>
 
@@ -323,7 +483,8 @@
                             </div>
 
                             <!-- CTA Button -->
-                            <a href="#contact" :class="isScrolled ? 'lg:inline-flex' : 'hidden'"
+                            <a href="https://arezuaesthetics.com/book-your-consultation/"
+                                :class="isScrolled ? 'lg:inline-flex' : 'hidden'"
                                 class="inline-flex items-center justify-center text-sm font-medium bg-zinc-100 text-zinc-950 rounded-lg px-4 py-2 hover:bg-zinc-200 transition-colors">
                                 Book Appointment
                             </a>
@@ -351,6 +512,7 @@
             </div>
         </div>
 
+        <!-- Hero Section  -->
         <section class="relative pt-24 md:pt-36">
             <!-- Background Visual Grid/Image Overlay -->
             <div class="absolute inset-0 -z-20">
@@ -711,6 +873,108 @@
             </div>
         </section>
 
+        <!-- Images Section -->
+        <section class="selector-wrapper">
+
+            <div class="hero">
+                <h1>Aesthetic Excellence</h1>
+                <p>
+                    Discover refined treatments, elegant results, and a clinic experience designed around confidence and
+                    natural beauty.
+                </p>
+            </div>
+
+            <div class="options" id="optionsContainer">
+
+                <div class="option active"
+                    data-image="https://arezuaesthetics.com/wp-content/uploads/2025/12/WhatsApp-Image-2025-12-18-at-10.39.15-AM-1.jpeg">
+
+                    <div class="shadow"></div>
+
+                    <div class="label">
+                        <div class="icon">
+                            <i class="fas fa-user-doctor"></i>
+                        </div>
+
+                        <div class="info">
+                            <div class="main">Personal Consultation</div>
+                            <div class="sub">Guidance, expertise, and confidence from consultation</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option"
+                    data-image="https://arezuaesthetics.com/wp-content/uploads/2025/12/WhatsApp-Image-2025-12-18-at-10.39.10-AM.jpeg">
+
+                    <div class="shadow"></div>
+
+                    <div class="label">
+                        <div class="icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+
+                        <div class="info">
+                            <div class="main">Natural Results</div>
+                            <div class="sub">Enhancing beauty while preserving authenticity.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option"
+                    data-image="https://arezuaesthetics.com/wp-content/uploads/2025/12/WhatsApp-Image-2025-12-18-at-10.39.08-AM.jpeg">
+
+                    <div class="shadow"></div>
+
+                    <div class="label">
+                        <div class="icon">
+                            <i class="fas fa-clinic-medical"></i>
+                        </div>
+
+                        <div class="info">
+                            <div class="main">Luxury Environment</div>
+                            <div class="sub">Where safety meets sophistication.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option"
+                    data-image="https://arezuaesthetics.com/wp-content/uploads/2026/06/Our-philosophy-natural-balanced-results-—-always.-✨We-take-the-time-to-analyse-the-whole-face-.jpg">
+
+                    <div class="shadow"></div>
+
+                    <div class="label">
+                        <div class="icon">
+                            <i class="fa-solid fa-tooth"></i>
+                        </div>
+
+                        <div class="info">
+                            <div class="main">Natural Lip Results</div>
+                            <div class="sub">Soft volume designed to look effortless.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option"
+                    data-image="https://arezuaesthetics.com/wp-content/uploads/2025/12/WhatsApp-Image-2025-12-18-at-10.39.18-AM-1.jpeg">
+
+                    <div class="shadow"></div>
+
+                    <div class="label">
+                        <div class="icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+
+                        <div class="info">
+                            <div class="main">Specialist Care</div>
+                            <div class="sub">Where medical expertise meets aesthetic vision.</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
         <!-- ===== HOW IT WORKS ===== -->
         <section class="py-24 bg-zinc-950" id="overview">
             <div class="max-w-5xl mx-auto px-6">
@@ -870,7 +1134,7 @@
                                 <span class="text-white text-sm">★★★★★</span>
                             </div>
                             <p class="text-zinc-300 text-sm font-light leading-relaxed italic">"The most natural result
-                                I've ever had. You can tell Dr. Farsari really understands facial anatomy. I look
+                                I've ever had. You can tell Dr. Forsati really understands facial anatomy. I look
                                 refreshed, not frozen."</p>
                             <p class="text-zinc-600 text-xs mt-3 font-medium uppercase tracking-wide">— Ana M., Lisbon
                             </p>
@@ -903,7 +1167,7 @@
         </section>
 
         <!-- ===== ABOUT DR. FORSATI ===== -->
-        <section class="py-24 bg-zinc-950" id="doctor">
+        <section class="py-24 bg-zinc-950" id="about">
             <div class="max-w-6xl mx-auto px-6">
 
                 <div class="gold-line mb-20"></div>
@@ -955,15 +1219,20 @@
                             expertise with a refined aesthetic eye and unwavering commitment to patient safety.
                         </p>
 
-                        <p class="text-zinc-500 leading-relaxed">
+                        <p class="text-zinc-500 leading-relaxed mb-5">
                             Her philosophy is simple: elegant, natural-looking results that enhance rather than alter,
                             helping patients look refreshed, confident and authentically themselves.
                         </p>
 
+                        <a href="https://arezuaesthetics.com/about-us/"
+                            class="inline-flex items-center rounded-xl bg-white px-8 py-4 text-sm font-semibold text-zinc-950 hover:opacity-90 transition">
+                            Know More →
+                        </a>
+
                     </div>
 
                 </div>
-                
+
                 <!-- Why Patients Choose -->
                 <div class="mt-20 bg-zinc-900/40 border border-zinc-800 rounded-3xl p-10">
 
@@ -1003,23 +1272,30 @@
 
                 </div>
 
-                <!-- CTA -->
-                <div class="text-center mt-20">
+                <!-- Bottom CTA Card -->
+                <div class="mt-20">
 
-                    <h3 class="serif text-4xl font-light mb-6">
-                        Book a Consultation
-                    </h3>
+                    <div class="rounded-3xl border border-zinc-800 bg-zinc-900/40 p-10 text-center">
 
-                    <p class="max-w-2xl mx-auto text-zinc-500 mb-8">
-                        Whether you are considering a surgical procedure or a subtle non-surgical treatment, Drª.
-                        Forsati and the Arezu team are committed to delivering personalised care and refined,
-                        natural-looking results.
-                    </p>
+                        <p class="text-zinc-500 mb-3">
+                            Still have questions?
+                        </p>
 
-                    <a href="#book"
-                        class="inline-flex items-center rounded-xl bg-white px-8 py-4 text-sm font-semibold text-zinc-950 transition hover:opacity-90">
-                        Schedule Consultation →
-                    </a>
+                        <h3 class="serif text-3xl md:text-4xl font-light text-zinc-100 mb-6">
+                            Speak With Our Medical Team
+                        </h3>
+
+                        <p class="max-w-2xl mx-auto text-zinc-500 mb-8">
+                            We're happy to answer any questions regarding treatments, suitability, recovery or expected
+                            results.
+                        </p>
+
+                        <a href="https://arezuaesthetics.com/book-your-consultation/"
+                            class="inline-flex items-center rounded-xl bg-white px-8 py-4 text-sm font-semibold text-zinc-950 hover:opacity-90 transition">
+                            Book Consultation →
+                        </a>
+
+                    </div>
 
                 </div>
 
@@ -1145,33 +1421,86 @@
 
                 </div>
 
-                <!-- Bottom CTA Card -->
+                <!-- Appointment Form -->
+                <section id="appointment-form" class="pt-24 bg-zinc-950">
+                    <div class="max-w-5xl mx-auto px-6">
 
-                <div class="mt-20">
+                        <div class="text-center mb-14">
+                            <p class="text-xs tracking-[0.3em] text-white uppercase mb-4 font-medium">
+                                BOOK CONSULTATION
+                            </p>
+                            <h2 class="serif text-5xl md:text-6xl font-light text-zinc-100 mb-6">
+                                Schedule Your Appointment
+                            </h2>
+                            <p class="max-w-2xl mx-auto text-zinc-500">
+                                Complete the form below and our team will contact you to confirm your consultation.
+                            </p>
+                        </div>
 
-                    <div class="rounded-3xl border border-zinc-800 bg-zinc-900/40 p-10 text-center">
+                        <div class="bg-zinc-900/50 border border-zinc-800 rounded-3xl p-8 md:p-10">
 
-                        <p class="text-zinc-500 mb-3">
-                            Still have questions?
-                        </p>
+                            <!-- 1. ADDED ACTION AND METHOD HERE -->
+                            <form action="https://api.web3forms.com/submit" method="POST" class="space-y-6">
 
-                        <h3 class="serif text-3xl md:text-4xl font-light text-zinc-100 mb-6">
-                            Speak With Our Medical Team
-                        </h3>
+                                <!-- 2. ADDED YOUR ACCESS KEY (Replace YOUR_ACCESS_KEY_HERE) -->
+                                <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
 
-                        <p class="max-w-2xl mx-auto text-zinc-500 mb-8">
-                            We're happy to answer any questions regarding treatments, suitability, recovery or expected
-                            results.
-                        </p>
+                                <!-- Optional: Redirects users to a thank you page after submitting -->
+                                <!-- <input type="hidden" name="redirect" value="https://yourwebsite.com/thank-you.html"> -->
 
-                        <a href="#book"
-                            class="inline-flex items-center rounded-xl bg-white px-8 py-4 text-sm font-semibold text-zinc-950 hover:opacity-90 transition">
-                            Book Consultation →
-                        </a>
+                                <div class="grid md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="block text-sm text-zinc-400 mb-2">
+                                            Full Name *
+                                        </label>
+                                        <!-- 3. ADDED name="name" AND required -->
+                                        <input type="text" name="name" placeholder="Your full name" required
+                                            class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-5 py-4 text-zinc-100 focus:outline-none focus:border-white transition">
+                                    </div>
 
+                                    <div>
+                                        <label class="block text-sm text-zinc-400 mb-2">
+                                            Email Address *
+                                        </label>
+                                        <!-- 3. ADDED name="email" AND required -->
+                                        <input type="email" name="email" placeholder="you@example.com" required
+                                            class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-5 py-4 text-zinc-100 focus:outline-none focus:border-white transition">
+                                    </div>
+                                </div>
+
+                                <div class="grid md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="block text-sm text-zinc-400 mb-2">
+                                            Phone / WhatsApp *
+                                        </label>
+                                        <!-- 3. ADDED name="phone" AND required -->
+                                        <input type="tel" name="phone" placeholder="+351..." required
+                                            class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-5 py-4 text-zinc-100 focus:outline-none focus:border-white transition">
+                                    </div>
+
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm text-zinc-400 mb-2">
+                                        Additional Information
+                                    </label>
+                                    <!-- 3. ADDED name="message" -->
+                                    <textarea name="message" rows="6"
+                                        placeholder="Tell us about your goals or any questions you may have..."
+                                        class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-5 py-4 text-zinc-100 focus:outline-none focus:border-white transition resize-none"></textarea>
+                                </div>
+
+                                <div class="pt-2">
+                                    <button type="submit"
+                                        class="w-full md:w-auto bg-white text-zinc-950 font-semibold px-8 py-4 rounded-xl hover:bg-zinc-200 transition-all duration-300">
+                                        Request Consultation
+                                    </button>
+                                </div>
+
+                            </form>
+                        </div>
                     </div>
-
-                </div>
+                </section>
 
             </div>
 
@@ -1239,11 +1568,11 @@
                 <!-- CTA Buttons -->
                 <div class="flex flex-col sm:flex-row justify-center gap-4 mb-12">
 
-                    <a href="tel:+351912493035"
+                    <a href="https://wa.me/351912493035"
                         class="inline-flex items-center justify-center gap-3 bg-white text-black font-semibold px-8 py-4 rounded-xl hover:bg-zinc-200 transition-all shadow-[0_0_40px_rgba(255,255,255,0.15)]">
 
                         <i data-lucide="phone" class="w-4 h-4"></i>
-                        Call +351 912 493 035
+                        Consult on Whatsapp
                     </a>
 
                     <a href="mailto:info@arezuaesthetics.com"
@@ -1254,18 +1583,6 @@
                     </a>
 
                 </div>
-
-                <!-- WhatsApp -->
-                <a href="https://wa.me/351912493035"
-                    class="inline-flex items-center gap-2 text-zinc-500 hover:text-zinc-300 transition-colors text-sm">
-
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" />
-                    </svg>
-
-                    Or message us on WhatsApp
-                </a>
 
                 <!-- Divider -->
                 <div class="max-w-3xl mx-auto mt-16 mb-10">
@@ -1317,10 +1634,12 @@
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-10 mb-12">
                     <!-- Brand -->
                     <div class="col-span-2 md:col-span-1">
-                        <div class="inline-block px-3 py-2 mb-4">
-                            <p class="serif text-lg font-medium tracking-[0.15em] text-zinc-300 uppercase notranslate">
-                                AREZU<br><span class="text-[10px] tracking-[0.3em] font-light">AESTHETICS</span></p>
-                        </div>
+                        <a href="#" class="flex justify-start items-start space-x-3">
+                            <div class="">
+                                <img src="https://arezuaesthetics.com/wp-content/uploads/2021/05/image1.png" alt=""
+                                    class="h-20 w-auto">
+                            </div>
+                        </a>
                         <p class="text-zinc-600 text-sm font-light leading-relaxed">Premium aesthetic medicine in
                             Lisbon. Natural results, medical excellence.</p>
                         <div class="flex gap-3 mt-4">
@@ -1445,22 +1764,13 @@
                     <i data-lucide="phone" class="w-4 h-4"></i>
                     <span class="hidden sm:inline">Call Now</span>
                 </a>
-                <a href="#book"
+                <a href="https://arezuaesthetics.com/book-your-consultation/"
                     class="flex-1 sm:flex-none btn-gold text-zinc-950 font-semibold px-5 py-2.5 rounded-lg text-sm text-center">
                     Book Consultation
                 </a>
             </div>
         </div>
 
-        <!-- WhatsApp float button -->
-        <!-- <a href="https://wa.me/351912493035"
-            class="fixed bottom-20 right-5 z-50 w-12 h-12 rounded-full bg-green-500 hover:bg-green-400 flex items-center justify-center shadow-lg shadow-green-900/40 transition-all hover:scale-110"
-            title="WhatsApp">
-            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
-            </svg>
-        </a> -->
     </main>
 
 
@@ -1551,7 +1861,45 @@
                 }
             }, 300);
         }
+
+        // Images Section
+
+        const options = document.querySelectorAll(".option");
+
+        /* Set Background Images */
+        options.forEach(option => {
+            option.style.backgroundImage =
+                `url('${option.dataset.image}')`;
+        });
+
+        /* Click Effect */
+        options.forEach(option => {
+
+            option.addEventListener("click", () => {
+
+                options.forEach(item => {
+                    item.classList.remove("active");
+                });
+
+                option.classList.add("active");
+
+            });
+
+        });
+
+        /* Entrance Animation */
+        options.forEach((option, index) => {
+
+            setTimeout(() => {
+
+                option.classList.add("show");
+
+            }, 180 * index);
+
+        });
     </script>
+
+
 
     <script>
         window.addEventListener('load', () => {
